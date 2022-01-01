@@ -1,29 +1,19 @@
 <?php
-// phpinfo(); exit();
 
-// Require composer autoloader
-require '/app/vendor/autoload.php';
+// Require Composer autoloader
+require_once '/app/vendor/autoload.php';
+require_once 'controllers.php';
 
-// Create Router instance
-$router = new \Bramus\Router\Router();
+main();
 
-// $router->setBasePath('/');
+function main() {
 
-// Define routes
-// ...
+    $router = new \Bramus\Router\Router();
 
-$router->get('foo', function() {
-    echo 'Foo Page Contents';
-});
+    $router->get('/', '\Controllers\home');
+    $router->get('front-gate', '\Controllers\front_gate');
 
-$router->get('/', function() {
-    echo 'Home Page Contents';
-});
+    $router->run();
 
-// This route handling function will only be executed when visiting http(s)://www.example.org/about
-$router->get('/about', function() {
-    echo 'About Page Contents';
-});
-
-// Run it!
-$router->run();
+    return true;
+}
