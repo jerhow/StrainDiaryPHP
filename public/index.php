@@ -11,7 +11,7 @@ function main() {
     $router = new \Bramus\Router\Router();
 
     $router->get('/', '\Controllers\home');
-    $router->get('front-gate', '\Controllers\front_gate');
+    $router->get('front-gate', '\Controllers\front_gate_GET');
 
     $router->run();
 
