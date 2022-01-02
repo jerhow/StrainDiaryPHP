@@ -12,6 +12,7 @@ function main() {
 
     $router->get('/', '\Controllers\home');
     $router->get('front-gate', '\Controllers\front_gate_GET');
+    $router->post('front-gate', '\Controllers\front_gate_POST');
 
     $router->run();
 

@@ -12,9 +12,10 @@
 
 <link rel="stylesheet" type="text/css" href="<?=$static_asset_url_base?>base.css?<?=$nonce?>" media="all">
 
-<html>
-<head>
-<title>Strain Diary - Track Your Trees</title>
+<script type="text/javascript">
+
+</script>
+
 </head>
 
 <body>
