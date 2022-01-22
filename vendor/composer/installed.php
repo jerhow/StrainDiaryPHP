@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'bbd84f5647fe2198b3c10adb7981cff12ab38655',
+        'reference' => 'ba2006d7f5b5e44bce8d79ee902b8973a99a59a5',
         'name' => '__root__',
         'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'bbd84f5647fe2198b3c10adb7981cff12ab38655',
+            'reference' => 'ba2006d7f5b5e44bce8d79ee902b8973a99a59a5',
             'dev_requirement' => false,
         ),
         'bramus/router' => array(
