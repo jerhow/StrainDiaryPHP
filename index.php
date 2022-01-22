@@ -53,6 +53,9 @@ function main() {
     $router->get('/login', 'Controllers::login_GET');
     $router->post('/login', 'Controllers::login_POST');
 
+    $router->get('/signup', 'Controllers::signup_GET');
+    $router->post('/signup', 'Controllers::signup_POST');
+
     $router->run();
 
     if(isset($dbh) && !is_null($dbh)) {

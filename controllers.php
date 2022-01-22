@@ -37,6 +37,21 @@ class Controllers {
         }
     }
 
+    public static function signup_GET($msg = '') {
+
+        require_once('templates/header.php');
+        require_once('templates/signup.php');
+        require_once('templates/footer.php');
+    }
+
+    public static function signup_POST() {
+
+        $un = $_POST['un'];
+        $pw = $_POST['pw'];
+        $nickname = $_POST['nickname'];
+
+    }
+
     public static function login_GET($msg = '') {
 
         require_once('templates/header.php');

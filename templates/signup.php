@@ -1,17 +1,16 @@
 <?php
 ?>
 
-<h1>Login</h1>
+<h1>Create Account</h1>
 
 <p><?=$msg?></p>
 
-<form id="login_form" action='<?php echo URL_BASE; ?>/login' method='POST'>
+<form id="signup_form" action='<?php echo URL_BASE; ?>/signup' method='POST'>
     Email: <input type="text" name="un"><br />
     Password: <input type="password" name="pw"><br />
+    Nickname: <input type="text" name="nickname"><br />
     <input type="submit" name="btn_submit" value=" Submit ">
 </form>
-
-<p><a href='<?php echo URL_BASE; ?>/signup'>Sign up?</a></p>
 
 <?php
 ?>
