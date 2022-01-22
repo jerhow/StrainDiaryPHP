@@ -16,20 +16,15 @@ composer.phar
 scratch.*
 *.sqlite3
 Dump*.sql
-*.pem
 info.php
 test.php
-
-# Keeping track of things
-nextsteps.txt
-go-heroku-notes.txt
-bugs.txt
+notes.md
+bugs.md
+nextsteps.md
+*.pem
 
 # Config (TBD)
 # config/*.json
-# For quick experiments
-scratch.*
-tutorial*.go
 
 # Ignore some Docker things for the moment
 docker-compose.yml
