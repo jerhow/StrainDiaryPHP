@@ -3,12 +3,12 @@
 
 <h1>Create Account</h1>
 
-<p><?=$msg?></p>
+<p style="color: red;"><?=$msg?></p>
 
-<form id="signup_form" action='<?php echo URL_BASE; ?>/signup' method='POST'>
-    Email: <input type="text" name="un"><br />
+<form id="signup_form" action='<?=URL_BASE?>/signup' method='POST'>
+    Email: <input type="text" name="un" value="<?=$un?>"><br />
     Password: <input type="password" name="pw"><br />
-    Nickname: <input type="text" name="nickname"><br />
+    Nickname: <input type="text" name="nickname" value="<?=$nickname?>"><br />
     <input type="submit" name="btn_submit" value=" Submit ">
 </form>
 

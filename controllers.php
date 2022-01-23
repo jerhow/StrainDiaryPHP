@@ -37,7 +37,7 @@ class Controllers {
         }
     }
 
-    public static function signup_GET($msg = '') {
+    public static function signup_GET($msg = '', $un = '', $nickname = '') {
 
         require_once('templates/header.php');
         require_once('templates/signup.php');
@@ -49,6 +49,19 @@ class Controllers {
         $un = $_POST['un'];
         $pw = $_POST['pw'];
         $nickname = $_POST['nickname'];
+
+        // TODO: Input validation
+
+        // echo '<pre>';
+        // var_export(Db::userNameExists($un), false);
+        // echo '</pre>';
+        // die;
+
+        if(Db::userNameExists($un)) {
+            self::signup_GET('Email address already in use', $un, $nickname);
+        }
+
+        self::signup_GET('Success', $un, $nickname);
 
     }
 
@@ -64,7 +77,7 @@ class Controllers {
         $un = $_POST['un'];
         $pw = $_POST['pw'];
 
-        $auth = Common::authenticate($un, $pw);
+        $auth = Db::authenticate($un, $pw);
         
         if(!$auth) {
             self::login_GET('Incorrect email or password');
