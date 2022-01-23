@@ -1,5 +1,6 @@
 {
     "require": {
-        "bramus/router": "~1.6"
+        "bramus/router": "~1.6",
+        "sendinblue/api-v3-sdk": "8.x.x"
     }
 }
