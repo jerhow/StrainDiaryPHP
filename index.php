@@ -4,6 +4,7 @@ ini_set('display_errors', '1');
 
 // Require Composer autoloader
 require_once 'vendor/autoload.php';
+require_once 'config.php';
 require_once 'controllers.php';
 require_once 'common.php';
 

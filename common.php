@@ -2,10 +2,11 @@
 
 // namespace Common;
 
-define('URL_BASE', '/straindiary');
-define('BCRYPT_COST', 8);
-
 class Common {
+
+    public static function nonce() {
+        return hrtime(true);
+    }
 
     public static function dbh() {
         $db_host = getenv('DATABASE_HOST', true);
