@@ -52,13 +52,12 @@ class Controllers {
 
         // TODO: Input validation
 
-        // echo '<pre>';
-        // var_export(Db::userNameExists($un), false);
-        // echo '</pre>';
-        // die;
-
         if(Db::userNameExists($un)) {
             self::signup_GET('Email address already in use', $un, $nickname);
+        }
+
+        if(Db::nicknameExists($nickname)) {
+            self::signup_GET('Nickname already in use', $un, $nickname);
         }
 
         self::signup_GET('Success', $un, $nickname);

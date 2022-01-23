@@ -85,10 +85,41 @@ class Db {
             echo $e->getMessage();
         }
 
-        // echo '<pre>';
-        // var_export($rows, false);
-        // echo '</pre>';
-        // die;
+        if(count($rows) === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Nicknames are also unique in the DB schema, so we need to check when
+     * one is requested.
+     * 
+     * Returns a boolean.
+     * Returns false if an empty string is passed in.
+     */
+    public static function nicknameExists($nickname = '') {
+        global $dbh;
+
+        if($nickname === '') {
+            return false;
+        }
+
+        try {
+            $sql = "" .
+                "SELECT id " .
+                "FROM t_user " .
+                "WHERE nickname = :nickname";
+            
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':nickname', $nickname);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            echo $e->getMessage();
+        }
 
         if(count($rows) === 1) {
             return true;
