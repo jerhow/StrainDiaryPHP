@@ -50,10 +50,26 @@ class Controllers {
         $pw = $_POST['pw'];
         $nickname = $_POST['nickname'];
 
-        // TODO: Input validation
+        // Validate user name
+        $un = substr($un, 0, 100);
+        
+        if (!filter_var($un, FILTER_VALIDATE_EMAIL)) {
+            self::signup_GET('Invalid email address', $un, $nickname);
+        }
 
         if(Db::userNameExists($un)) {
             self::signup_GET('Email address already in use', $un, $nickname);
+        }
+
+        // Validate password (maybe just for some absurd length to avoid intentional overrun attempts?)
+        // Ultimately we're hashing it anyway.
+        $pw = substr($pw, 0, 100);
+
+        // Validate nickname
+        $nickname = substr($nickname, 0, 50);
+        if(preg_match('/[^a-zA-Z0-9\_\-]/mi', $nickname)) {
+            self::signup_GET('Nickname can only contain letters, numbers, dashes and underscores', 
+                $un, $nickname);
         }
 
         if(Db::nicknameExists($nickname)) {
@@ -61,7 +77,6 @@ class Controllers {
         }
 
         self::signup_GET('Success', $un, $nickname);
-
     }
 
     public static function login_GET($msg = '') {
