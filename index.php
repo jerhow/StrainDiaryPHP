@@ -37,6 +37,8 @@ $dbh = Db::dbh();
 
 main();
 
+$dbh = null;
+
 function main() {
 
     global $dbh;
@@ -60,10 +62,6 @@ function main() {
     $router->post('/signup', 'Controllers::signup_POST');
 
     $router->run();
-
-    if(isset($dbh) && !is_null($dbh)) {
-        $dbh = null;
-    }
 
     return true;
 }
