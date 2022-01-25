@@ -61,6 +61,10 @@ class Controllers {
             self::signup_GET('Email address already in use', $un, $nickname);
         }
 
+        // Require a password (duh)
+        if(trim($pw) === '') {
+            self::signup_GET('A password is required', $un, $nickname);
+        }
         // Validate password (maybe just for some absurd length to avoid intentional overrun attempts?)
         // Ultimately we're hashing it anyway.
         $pw = substr($pw, 0, 100);
