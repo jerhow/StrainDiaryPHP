@@ -55,15 +55,18 @@ class Controllers {
         
         if (!filter_var($un, FILTER_VALIDATE_EMAIL)) {
             self::signup_GET('Invalid email address', $un, $nickname);
+            return false;
         }
 
         if(Db::userNameExists($un)) {
             self::signup_GET('Email address already in use', $un, $nickname);
+            return false;
         }
 
         // Require a password (duh)
         if(trim($pw) === '') {
             self::signup_GET('A password is required', $un, $nickname);
+            return false;
         }
         // Validate password (maybe just for some absurd length to avoid intentional overrun attempts?)
         // Ultimately we're hashing it anyway.
@@ -74,16 +77,21 @@ class Controllers {
         if(preg_match('/[^a-zA-Z0-9\_\-]/mi', $nickname)) {
             self::signup_GET('Nickname can only contain letters, numbers, dashes and underscores', 
                 $un, $nickname);
+            return false;
         }
 
         if(Db::nicknameExists($nickname)) {
             self::signup_GET('Nickname already in use', $un, $nickname);
+            return false;
         }
 
         // If we get here, we've passed all the validations
-        $confirmationCode = Util::confirmationCode();
+        $confirmation_code = Util::confirmationCode();
+        $hashed_pw = password_hash($pw, PASSWORD_BCRYPT, ["cost" => BCRYPT_COST]);
+        Db::addNewUser($un, $hashed_pw, $nickname, $confirmation_code);
 
         self::signup_GET('Success', $un, $nickname);
+        return true;
     }
 
     public static function login_GET($msg = '') {

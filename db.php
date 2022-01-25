@@ -127,4 +127,28 @@ class Db {
             return false;
         }
     }
+
+    public static function addNewUser($un, $pw, $nickname, $confirmation_code) {
+        global $dbh;
+
+        try {
+            $sql = "" .
+                "INSERT INTO t_user " .
+                "(un, pw, nickname, confirmation_code) " .
+                "VALUES " .
+                "(:un, :pw, :nickname, :confirmation_code) ";
+            
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':un', $un);
+            $stmt->bindValue(':pw', $pw);
+            $stmt->bindValue(':nickname', $nickname);
+            $stmt->bindValue(':confirmation_code', $confirmation_code);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            echo $e->getMessage();
+        }
+
+        return true;
+    }
 }
