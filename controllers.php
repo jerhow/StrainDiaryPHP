@@ -80,6 +80,9 @@ class Controllers {
             self::signup_GET('Nickname already in use', $un, $nickname);
         }
 
+        // If we get here, we've passed all the validations
+        $confirmationCode = Util::confirmationCode();
+
         self::signup_GET('Success', $un, $nickname);
     }
 
