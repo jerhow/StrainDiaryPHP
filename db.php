@@ -111,7 +111,8 @@ class Db {
             $sql = "" .
                 "SELECT id AS user_id, un, pw, nickname, created_at " .
                 "FROM t_user " .
-                "WHERE un = :un";
+                "WHERE un = :un " .
+                "AND confirmed = 'Y'";
             
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':un', $un);
