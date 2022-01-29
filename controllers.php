@@ -62,7 +62,7 @@ class Controllers {
         require_once('templates/footer.php');
     }
 
-    public static function signup_GET($msg = '', $un = '', $nickname = '') {
+    public static function signup_GET($msg = '', $un = '', $nickname = '', $completed = false) {
 
         require_once('templates/header.php');
         require_once('templates/signup.php');
@@ -120,7 +120,7 @@ class Controllers {
             error_log("signup_POST() - email not sent");
         }
 
-        self::signup_GET('Success', $un, $nickname);
+        self::signup_GET('Success', $un, $nickname, true);
         return true;
     }
 

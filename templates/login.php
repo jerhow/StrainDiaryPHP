@@ -11,7 +11,7 @@
     <input type="submit" name="btn_submit" value=" Submit ">
 </form>
 
-<p><a href='<?php echo URL_BASE; ?>/signup'>Sign up?</a></p>
+<p>No account? <a href='<?php echo URL_BASE; ?>/signup'>Sign up</a></p>
 
 <?php
 ?>
