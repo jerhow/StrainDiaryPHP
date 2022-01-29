@@ -37,6 +37,31 @@ class Controllers {
         }
     }
 
+    /**
+     * Confirming a newly-created account.
+     * This is the place you land when you click through on the link
+     * in the transactional email we send after you sign up for an account.
+     */
+    public static function confirmation_GET($conf_code = '') {
+
+        $msg = "Oops, something's not right. This account may have " .
+            "already been confirmed. <br /><br />" .
+            "If so, you can simply sign in to get started.";
+
+        $conf_code_matches = Db::check_confirmation_code($conf_code);
+
+        if($conf_code_matches) {
+            $account_confirmed = Db::mark_account_confirmed($conf_code);
+            if($account_confirmed) {
+                $msg = 'Account successfully confirmed!';
+            }
+        }
+
+        require_once('templates/header.php');
+        require_once('templates/confirmation.php');
+        require_once('templates/footer.php');
+    }
+
     public static function signup_GET($msg = '', $un = '', $nickname = '') {
 
         require_once('templates/header.php');

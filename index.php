@@ -37,6 +37,8 @@ function main() {
     $router->get('/signup', 'Controllers::signup_GET');
     $router->post('/signup', 'Controllers::signup_POST');
 
+    $router->get('/confirmation/{conf_code}', 'Controllers::confirmation_GET');
+
     $router->run();
 
     return true;
