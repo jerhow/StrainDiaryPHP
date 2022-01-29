@@ -115,6 +115,11 @@ class Controllers {
         $hashed_pw = password_hash($pw, PASSWORD_BCRYPT, ["cost" => BCRYPT_COST]);
         Db::addNewUser($un, $hashed_pw, $nickname, $confirmation_code);
 
+        $email_sent = Util::send_confirmation_email($un, $nickname, $confirmation_code);
+        if(!$email_sent) {
+            error_log("signup_POST() - email not sent");
+        }
+
         self::signup_GET('Success', $un, $nickname);
         return true;
     }
