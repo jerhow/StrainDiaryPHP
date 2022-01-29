@@ -10,12 +10,15 @@ if(!$env) {
 }
 
 if($env === 'DEV') {
+    define('URL_DOMAIN', 'http://127.0.0.1');
     define('URL_BASE', '/straindiary');
     define('STATIC_ASSET_URL_BASE', '');
 } elseif($env === 'PROD') {
+    define('URL_DOMAIN', 'https://straindiary.com');
     define('URL_BASE', '');
     define('STATIC_ASSET_URL_BASE', '');
 } else {
+    define('URL_DOMAIN', 'http://127.0.0.1');
     define('URL_BASE', '/straindiary');
     define('STATIC_ASSET_URL_BASE', '');
 }
