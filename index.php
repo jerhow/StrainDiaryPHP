@@ -7,7 +7,6 @@ require_once 'config.php';
 require_once 'util.php';
 require_once 'db.php';
 require_once 'controllers.php';
-require_once 'common.php';
 
 $dbh = Db::dbh();
 
