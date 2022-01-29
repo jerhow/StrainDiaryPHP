@@ -5,7 +5,7 @@
 
 <p><?=$msg?></p>
 
-<p><a href='<?php echo URL_BASE; ?>/signup'>Sign in</a></p>
+<p><a href='<?php echo URL_BASE; ?>/login'>Sign in</a></p>
 
 <?php
 ?>
