@@ -26,7 +26,8 @@ function main() {
 
     // $router->setBasePath('/straindiary');
 
-    $router->get('/', 'Controllers::home');
+    $router->get('/', 'Controllers::root_GET');
+
     $router->get('/front-gate', 'Controllers::front_gate_GET');
     $router->post('/front-gate', 'Controllers::front_gate_POST');
 

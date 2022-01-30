@@ -5,7 +5,7 @@
 // use PDO;
 
 class Controllers {
-    public static function home() {
+    public static function root_GET() {
 
         // error_log('are we here?');
         // echo('are we here?');
@@ -22,7 +22,7 @@ class Controllers {
         // $test_result = authenticate_login('j@h.org', 'pass');
         // echo '<pre>$test_result = '; var_export($test_result, false); echo '</pre>';
     }
-
+    
     /**
      * Confirming a newly-created account.
      * This is the place you land when you click through on the link
