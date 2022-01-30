@@ -22,7 +22,20 @@ class Controllers {
         // $test_result = authenticate_login('j@h.org', 'pass');
         // echo '<pre>$test_result = '; var_export($test_result, false); echo '</pre>';
     }
-    
+
+    public static function home_GET() {
+        $user_id = $_SESSION['user_id'];
+        $user_email = $_SESSION['user_name'];
+        $nickname = $_SESSION['nickname'];
+        $account_create_date = $_SESSION['account_created_at'];
+        $msg = '';
+
+        require_once('templates/header.php');
+        require_once('templates/home.php');
+        require_once('templates/footer.php');
+
+    }
+
     /**
      * Confirming a newly-created account.
      * This is the place you land when you click through on the link
@@ -127,7 +140,7 @@ class Controllers {
         if(!$auth) {
             self::login_GET('Incorrect email or password');
         } else {
-            $_SESSION['uid'] = $auth[0]['user_id'];
+            $_SESSION['user_id'] = $auth[0]['user_id'];
             $_SESSION['user_name'] = $auth[0]['un'];
             $_SESSION['nickname'] = $auth[0]['nickname'];
             $_SESSION['account_created_at'] = $auth[0]['created_at'];

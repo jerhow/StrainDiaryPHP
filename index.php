@@ -39,6 +39,8 @@ function main() {
 
     $router->get('/confirmation/{conf_code}', 'Controllers::confirmation_GET');
 
+    $router->get('/home', 'Controllers::home_GET');
+
     $router->run();
 
     return true;
