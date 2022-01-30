@@ -6,21 +6,11 @@
 
 class Controllers {
     public static function root_GET() {
-
-        // error_log('are we here?');
-        // echo('are we here?');
-        
         Util::front_gate_check();
-        
-        echo 'Home Page Contents';
 
-        echo "<br /><br />Session data:<br /><br />";
-        // echo "uid: " . $_SESSION['uid'];
-
-        echo var_export($_SESSION, false);
-
-        // $test_result = authenticate_login('j@h.org', 'pass');
-        // echo '<pre>$test_result = '; var_export($test_result, false); echo '</pre>';
+        require_once('templates/header.php');
+        require_once('templates/root.php');
+        require_once('templates/footer.php');
     }
 
     public static function home_GET() {
@@ -34,6 +24,12 @@ class Controllers {
         require_once('templates/home.php');
         require_once('templates/footer.php');
 
+    }
+
+    public static function logout_GET() {
+        Util::logout();
+        header('Location: ' . URL_BASE . '/');
+        die();
     }
 
     /**
@@ -62,6 +58,7 @@ class Controllers {
     }
 
     public static function signup_GET($msg = '', $un = '', $nickname = '', $completed = false) {
+        Util::front_gate_check();
 
         require_once('templates/header.php');
         require_once('templates/signup.php');
@@ -149,7 +146,7 @@ class Controllers {
             // End session 30 minutes from the starting time.
             $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
 
-            header('Location: ' . URL_BASE);
+            header('Location: ' . URL_BASE . '/home');
             die();
         }
 
@@ -171,7 +168,7 @@ class Controllers {
     public static function front_gate_POST() {
         if( $_POST['front_gate_answer'] && $_POST['front_gate_answer'] === 'Yes' ) {
             setcookie('passed_front_gate', 'Yes', time() + (86400 * 30), "/"); // 86400 = 1 day
-            header('Location: ' . URL_BASE . '/login');
+            header('Location: ' . URL_BASE . '/');
             die();
         } else {
             setcookie("passed_front_gate", "", time() - 3600); // set the expiration date to one hour ago

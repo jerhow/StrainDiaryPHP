@@ -1,6 +1,7 @@
 <?php
 
 ini_set('display_errors', '1');
+ini_set('session.cookie_httponly', 1);
 
 require_once 'vendor/autoload.php'; // Composer autoloader
 require_once 'config.php';
@@ -20,6 +21,7 @@ function main() {
 
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
+        // header('Location: ' . URL_BASE . '/');
     }
 
     $router = new \Bramus\Router\Router();
@@ -40,6 +42,8 @@ function main() {
     $router->get('/confirmation/{conf_code}', 'Controllers::confirmation_GET');
 
     $router->get('/home', 'Controllers::home_GET');
+
+    $router->get('/logout', 'Controllers::logout_GET');
 
     $router->run();
 

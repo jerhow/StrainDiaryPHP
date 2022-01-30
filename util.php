@@ -2,18 +2,42 @@
 
 class Util {
 
+    public static function logout() {
+        // Initialize the session.
+        // If you are using session_name("something"), don't forget it now!
+        // session_start();
+
+        // Unset all of the session variables.
+        $_SESSION = array();
+
+        // If it's desired to kill the session, also delete the session cookie.
+        // Note: This will destroy the session, and not just the session data!
+        // if (ini_get("session.use_cookies")) {
+        //     $params = session_get_cookie_params();
+        //     setcookie(session_name(), '', time() - 42000,
+        //         $params["path"], $params["domain"],
+        //         $params["secure"], $params["httponly"]
+        //     );
+        // }
+
+        // Finally, destroy the session.
+        session_destroy();
+    }
+
     /**
-     * Either returns true, or redirects the user and halts execution
+     * Returns true, otherwise redirects
      */
     public static function front_gate_check() {
         // Check whether they've answered the age question at the front gate
         if(isset($_COOKIE['passed_front_gate']) && $_COOKIE['passed_front_gate'] === 'Yes') {
             return true;
         } else {
-            // Send the user to the front gate
             header('Location: ' . URL_BASE . '/front-gate');
             die();
         }
+        
+        // Should never get here
+        return false;
     }
 
     /**
