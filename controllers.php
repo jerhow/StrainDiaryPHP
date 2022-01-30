@@ -10,7 +10,7 @@ class Controllers {
         // error_log('are we here?');
         // echo('are we here?');
         
-        self::front_gate_check();
+        Util::front_gate_check();
         
         echo 'Home Page Contents';
 
@@ -21,20 +21,6 @@ class Controllers {
 
         // $test_result = authenticate_login('j@h.org', 'pass');
         // echo '<pre>$test_result = '; var_export($test_result, false); echo '</pre>';
-    }
-
-    /**
-     * Either returns true, or redirects the user and halts execution
-     */
-    public static function front_gate_check() {
-        // Check whether they've answered the age question at the front gate
-        if(isset($_COOKIE['passed_front_gate']) && $_COOKIE['passed_front_gate'] === 'Yes') {
-            return true;
-        } else {
-            // Send the user to the front gate
-            header('Location: ' . URL_BASE . '/front-gate');
-            die();
-        }
     }
 
     /**

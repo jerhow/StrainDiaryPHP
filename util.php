@@ -3,6 +3,20 @@
 class Util {
 
     /**
+     * Either returns true, or redirects the user and halts execution
+     */
+    public static function front_gate_check() {
+        // Check whether they've answered the age question at the front gate
+        if(isset($_COOKIE['passed_front_gate']) && $_COOKIE['passed_front_gate'] === 'Yes') {
+            return true;
+        } else {
+            // Send the user to the front gate
+            header('Location: ' . URL_BASE . '/front-gate');
+            die();
+        }
+    }
+
+    /**
      * Returns a boolean indicating success/failure
      */
     public static function send_confirmation_email($send_to = '', $nickname = '', $conf_code = '') {
