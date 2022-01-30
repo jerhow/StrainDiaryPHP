@@ -144,9 +144,6 @@ class Controllers {
     }
 
     public static function front_gate_GET() {
-        $html_page_title = "Strain Diary - Track Your Trees";
-        $static_asset_url_base = "";
-        $nonce = "12345";
 
         if(isset($_COOKIE['passed_front_gate']) && $_COOKIE['passed_front_gate'] === 'Yes') {
             header('Location: ' . URL_BASE);
