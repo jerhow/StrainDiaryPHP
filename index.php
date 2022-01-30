@@ -38,8 +38,6 @@ function main() {
 
     $router->get('/confirmation/{conf_code}', 'Controllers::confirmation_GET');
 
-    $router->get('/confirmed', 'Controllers::confirmed_GET');
-
     $router->run();
 
     return true;
