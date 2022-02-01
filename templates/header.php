@@ -10,7 +10,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title><?=HTML_PAGE_TITLE?></title>
 
-<link rel="stylesheet" type="text/css" href="<?=STATIC_ASSET_URL_BASE?>base.css?<?=Util::nonce()?>" media="all">
+<link rel="stylesheet" type="text/css" href="<?=STATIC_ASSET_URL?>base.css?<?=Util::nonce()?>" media="all">
 
 <script type="text/javascript">
 

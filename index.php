@@ -9,6 +9,8 @@ require_once 'util.php';
 require_once 'db.php';
 require_once 'controllers.php';
 
+session_start();
+
 $dbh = Db::dbh();
 
 main();
@@ -18,11 +20,6 @@ $dbh = null;
 function main() {
 
     global $dbh;
-
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-        // header('Location: ' . URL_BASE . '/');
-    }
 
     $router = new \Bramus\Router\Router();
 
@@ -36,6 +33,8 @@ function main() {
     $router->get('/login', 'Controllers::login_GET');
     $router->post('/login', 'Controllers::login_POST');
 
+    $router->get('/logout', 'Controllers::logout_GET');
+
     $router->get('/signup', 'Controllers::signup_GET');
     $router->post('/signup', 'Controllers::signup_POST');
 
@@ -43,7 +42,7 @@ function main() {
 
     $router->get('/home', 'Controllers::home_GET');
 
-    $router->get('/logout', 'Controllers::logout_GET');
+    $router->get('/settings', 'Controllers::settings_GET');
 
     $router->run();
 

@@ -2,6 +2,13 @@
 
 class Util {
 
+    public static function session_check() {
+        if (session_status() === PHP_SESSION_NONE || empty($_SESSION['user_id'])) {
+            session_start();
+            header('Location: ' . URL_BASE . '/');
+        }
+    }
+
     public static function logout() {
         // Initialize the session.
         // If you are using session_name("something"), don't forget it now!

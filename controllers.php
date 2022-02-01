@@ -8,12 +8,19 @@ class Controllers {
     public static function root_GET() {
         Util::front_gate_check();
 
+        // var_export(session_status(), false);
+        // var_export(PHP_SESSION_NONE, false);
+        // var_export($_SESSION, false);
+
+
         require_once('templates/header.php');
         require_once('templates/root.php');
         require_once('templates/footer.php');
     }
 
     public static function home_GET() {
+        Util::session_check();
+
         $user_id = $_SESSION['user_id'];
         $user_email = $_SESSION['user_name'];
         $nickname = $_SESSION['nickname'];
@@ -23,6 +30,11 @@ class Controllers {
         require_once('templates/header.php');
         require_once('templates/home.php');
         require_once('templates/footer.php');
+
+    }
+
+    public static function settings_GET($msg = '') {
+        Util::session_check();
 
     }
 
