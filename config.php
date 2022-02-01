@@ -12,7 +12,7 @@ if(!$env) {
 if($env === 'DEV') {
     define('URL_DOMAIN', 'http://127.0.0.1');
     define('URL_BASE', '/straindiary');
-    define('STATIC_ASSET_URL', 'https://straindiary.nyc3.digitaloceanspaces.com/');
+    define('STATIC_ASSET_URL', 'static/');
 } elseif($env === 'PROD') {
     define('URL_DOMAIN', 'https://straindiary.com');
     define('URL_BASE', '');
@@ -20,5 +20,5 @@ if($env === 'DEV') {
 } else {
     define('URL_DOMAIN', 'http://127.0.0.1');
     define('URL_BASE', '/straindiary');
-    define('STATIC_ASSET_URL', 'https://straindiary.nyc3.digitaloceanspaces.com/');
+    define('STATIC_ASSET_URL', 'static/');
 }
