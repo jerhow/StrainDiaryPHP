@@ -36,6 +36,15 @@ class Controllers {
     public static function settings_GET($msg = '') {
         Util::session_check();
 
+        $user_id = $_SESSION['user_id'];
+        $user_email = $_SESSION['user_name'];
+        $nickname = $_SESSION['nickname'];
+        $account_create_date = $_SESSION['account_created_at'];
+        $msg = '';
+
+        require_once('templates/header.php');
+        require_once('templates/settings.php');
+        require_once('templates/footer.php');
     }
 
     public static function logout_GET() {
