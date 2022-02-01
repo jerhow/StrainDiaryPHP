@@ -6,6 +6,9 @@
 <p><?=$msg?></p>
 <p>Hello, <?=$nickname?>!</p>
 
+<p><a href='<?=URL_BASE?>/diary'>Diary</a></p>
+<p><a href='<?=URL_BASE?>/settings'>Settings</a></p>
+
 <p>Session data:</p>
 <pre>
     <?php
@@ -14,7 +17,7 @@
 
 </pre>
 
-<p><a href='<?php echo URL_BASE; ?>/logout'>Logout</a></p>
+<p><a href='<?=URL_BASE?>/logout'>Logout</a></p>
 
 <?php
 ?>
