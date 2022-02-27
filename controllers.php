@@ -47,6 +47,18 @@ class Controllers {
         require_once('templates/footer.php');
     }
 
+    public static function settings_POST() {
+        Util::session_check();
+
+        $field_being_edited = isset($_POST['field_being_edited']) ? trim($_POST['field_being_edited']) : '';
+        $new_value = isset($_POST['new_value']) ? trim($_POST['new_value']) : '';
+
+        echo var_export($_POST, false);
+        echo var_export($field_being_edited, false);
+        echo var_export($new_value, false);
+        die;
+    }
+
     public static function logout_GET() {
         Util::logout();
         header('Location: ' . URL_BASE . '/');

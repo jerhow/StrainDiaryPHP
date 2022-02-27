@@ -11,9 +11,6 @@
 <p><a href='<?=URL_BASE?>/home'>Home</a></p>
 <p><a href='<?=URL_BASE?>/diary'>Diary</a></p>
 
-<form id="update_form" name="update_form" action="<?=URL_BASE?>/settings"
-    method="post">
-
 <div id="user_config">
 <table>
     <tr>
@@ -82,7 +79,11 @@
 </table>
 </div> <!-- /password_change -->
 
+<form id="change_form" name="change_form" action="<?=URL_BASE?>/settings"
+    method="post">
+
 <input type="hidden" id="field_being_edited" name="field_being_edited" value="">
+<input type="hidden" id="new_value" name="new_value" value="">
 
 </form>
 
@@ -105,13 +106,22 @@
 <p><a href='<?=URL_BASE?>/logout'>Logout</a></p>
 
 <script type="text/javascript">
+
+function submit_change_form(field_being_edited = '') {
+    var new_value = document.getElementById(field_being_edited).value;
+    document.getElementById('field_being_edited').value = field_being_edited;
+    document.getElementById('new_value').value = new_value;
+    document.getElementById('change_form').submit();
+    // console.log("POSTing: " + field_being_edited + " - " + new_value);
+}
+
 function update_user_email(current_value) {
     document.getElementById("user_email_wrapper").innerHTML = '' +
         '<input type="text" id="user_email" name="user_email" value="' + current_value + '" />' +
         '&nbsp;' +
         '<input type="button" id="user_email_submit_button" ' +
         '   name="user_email_submit_button" value="Submit change" ' +
-        '   onclick="javascript:submit_user_email();">' +
+        "   onclick='javascript:submit_change_form(\"user_email\");''>" +
         '&nbsp;or&nbsp;' +
         '<a href="javascript:void(0);" ' +
         "   onclick=\"javascript:cancel_user_email('" + current_value + "');\">Cancel</a>";
@@ -120,12 +130,7 @@ function update_user_email(current_value) {
     // document.getElementById("sort_icon").style.display = "inline";
 }
 
-function submit_user_email() {
-    var user_email = document.getElementById("user_email").value;
-    console.log("Next we will POST the new value: " + user_email);
-}
-
-function cancel_user_email(current_value) {
+function cancel_user_email(current_value = '') {
     document.getElementById("user_email_wrapper").innerHTML = '' +
         current_value +
         '&nbsp;' +
@@ -136,13 +141,13 @@ function cancel_user_email(current_value) {
     document.getElementById("nickname_update_button").style.display = "inline";
 }
 
-function update_nickname(current_value) {
+function update_nickname(current_value = '') {
     document.getElementById("nickname_wrapper").innerHTML = '' +
         '<input type="text" id="nickname" name="nickname" value="' + current_value + '" />' +
         '&nbsp;' +
         '<input type="button" id="nickname_submit_button" ' +
         '   name="nickname_submit_button" value="Submit change" ' +
-        '   onclick="javascript:submit_nickname();">' +
+        "   onclick='javascript:submit_change_form(\"nickname\");''>" +
         '&nbsp;or&nbsp;' +
         '<a href="javascript:void(0);" ' +
         "   onclick=\"javascript:cancel_nickname('" + current_value + "');\">Cancel</a>";
@@ -150,12 +155,7 @@ function update_nickname(current_value) {
     document.getElementById("user_email_update_button").style.display = "none";
 }
 
-function submit_nickname() {
-    var user_email = document.getElementById("nickname").value;
-    console.log("Next we will POST the new value: " + user_email);
-}
-
-function cancel_nickname(current_value) {
+function cancel_nickname(current_value = '') {
     document.getElementById("nickname_wrapper").innerHTML = '' +
         current_value +
         '&nbsp;' +
@@ -181,6 +181,7 @@ function cancel_password() {
     document.getElementById("user_email_update_button").style.display = "inline";
     document.getElementById("nickname_update_button").style.display = "inline";
 }
+
 </script>
 
 <?php
