@@ -40,7 +40,6 @@ class Controllers {
         $user_email = $_SESSION['user_name'];
         $nickname = $_SESSION['nickname'];
         $account_create_date = $_SESSION['account_created_at'];
-        $msg = '';
 
         require_once('templates/header.php');
         require_once('templates/settings.php');
@@ -50,12 +49,50 @@ class Controllers {
     public static function settings_POST() {
         Util::session_check();
 
-        $field_being_edited = isset($_POST['field_being_edited']) ? trim($_POST['field_being_edited']) : '';
-        $new_value = isset($_POST['new_value']) ? trim($_POST['new_value']) : '';
+        $field_being_edited = isset($_POST['field_being_edited']) 
+            ? trim($_POST['field_being_edited']) 
+            : '';
+        $new_value = isset($_POST['new_value']) 
+            ? trim($_POST['new_value']) 
+            : '';
 
-        echo var_export($_POST, false);
-        echo var_export($field_being_edited, false);
-        echo var_export($new_value, false);
+        // Validate what's being passed in
+        $allowed_fields = ['user_email', 'nickname', 'pwd'];
+        if(!in_array($field_being_edited, $allowed_fields)) {
+            error_log("Invalid 'field_being_edited' value POSTed to Controllers::settings_POST()");
+            self::settings_GET('ERROR: Invalid field parameter');
+            return false;
+        }
+
+        if($field_being_edited === 'user_email') {
+            // Vaildate email
+            // Write update to DB
+            // Dispatch transactional email to user about this change
+            self::settings_GET('{ INSERT APPROPRIATE MESSAGE }');
+            return false
+
+        } elseif($field_being_edited === 'nickname') {
+            // Vaildate nickname
+            // Write update to DB
+            // Dispatch transactional email to user about this change
+            self::settings_GET('{ INSERT APPROPRIATE MESSAGE }');
+            return false            
+
+        } elseif($field_being_edited === 'pwd') {
+            // Vaildate password (field names: 'pwd' and 'pwd_verify')
+            // Write update to DB
+            // Dispatch transactional email to user about this change
+            self::settings_GET('{ INSERT APPROPRIATE MESSAGE }');
+            return false
+
+        } else {
+             error_log('Hmm, we reached a place we should never be in Controllers::settings_POST()');
+        }
+
+        // echo var_export($_POST, false);
+        echo '<pre>'; echo var_export($_SESSION, false); echo '</pre>';
+        // echo var_export($field_being_edited, false);
+        // echo var_export($new_value, false);
         die;
     }
 
@@ -100,6 +137,7 @@ class Controllers {
 
     public static function signup_POST() {
 
+        // TODO: Add POST array member existence validation (with default values)
         $un = $_POST['un'];
         $pw = $_POST['pw'];
         $nickname = $_POST['nickname'];

@@ -5,7 +5,7 @@
 
 <h1>Settings</h1>
 
-<p><?=$msg?></p>
+<p id="msg" style="color: red;"><?=$msg?></p>
 <p>Hello, <?=$nickname?>!</p>
 
 <p><a href='<?=URL_BASE?>/home'>Home</a></p>
@@ -55,7 +55,7 @@
             Password: 
         </td>
         <td>
-            <input type="password" id="pwd_1" name="pwd_1" 
+            <input type="password" id="pwd" name="pwd" 
                 value="" />
         </td>
     </tr>
@@ -64,7 +64,7 @@
             Verify Password: 
         </td>
         <td>
-            <input type="password" id="pwd_2" name="pwd_2" 
+            <input type="password" id="pwd_verify" name="pwd_verify" 
                 value="" />
         </td>
     </tr>
