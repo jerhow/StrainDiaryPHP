@@ -43,6 +43,7 @@ function main() {
     $router->get('/home', 'Controllers::home_GET');
 
     $router->get('/settings', 'Controllers::settings_GET');
+    $router->post('/settings', 'Controllers::settings_POST');
 
     $router->run();
 

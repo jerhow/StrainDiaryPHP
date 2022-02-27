@@ -25,7 +25,7 @@ class Controllers {
         $user_email = $_SESSION['user_name'];
         $nickname = $_SESSION['nickname'];
         $account_create_date = $_SESSION['account_created_at'];
-        $msg = '';
+        $msg = "";
 
         require_once('templates/header.php');
         require_once('templates/home.php');
