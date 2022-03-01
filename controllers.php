@@ -54,12 +54,25 @@ class Controllers {
         $new_value = isset($_POST['new_value']) 
             ? trim($_POST['new_value']) 
             : '';
+        
+        // This is used separately. We need it to verify any type of change being made.
+        $pwd_confirm = isset($_POST['pwd_confirm'])
+            ? trim($_POST['pwd_confirm']) 
+            : '';
+
+        // error_log('pwd_confirm === ' . $pwd_confirm);
 
         // Validate what's being POSTed in
         $allowed_fields = ['user_email', 'nickname', 'pwd'];
         if(!in_array($field_being_edited, $allowed_fields)) {
             error_log("Invalid 'field_being_edited' value POSTed to Controllers::settings_POST()");
             self::settings_GET('ERROR: Invalid field parameter');
+            return false;
+        }
+
+        // Verify password first. Without a match on this we do nothing.
+        if(!Db::authenticate($_SESSION['user_name'], $pwd_confirm)) {
+            self::settings_GET('Incorrect password provided - no changes made');
             return false;
         }
 
@@ -84,26 +97,22 @@ class Controllers {
                 return false;
             }
 
-
             // Write update to DB
-            if(Db::updateUserName($_SESSION['user_id'], $new_value)) {
-                Util::logout();
-                self::root_GET(
-                    'Email address updated. Please check for an email from us, ' .
-                    'as you must confirm this change to activate the new email address.'
-                );
-            } else {
+            if(!Db::updateUserName($_SESSION['user_id'], $new_value)) {
                 self::settings_GET(
                     "An error occurred when trying to update email address - no changes made"
                 );
                 return false;
+            } else {
+                $_SESSION['user_name'] = $new_value;
             }
 
             // Dispatch transactional email to user about this change
 
             self::settings_GET('',
                 'Email address updated. Please check for an email from us, ' .
-                'as you must confirm this change to activate the new email address.'
+                'as you must confirm this change to activate the new email address. ' .
+                '<br />NOTE: If you do not perform this step, you will not be able to log in again.'
             );
             return false;
 
@@ -242,7 +251,7 @@ class Controllers {
         $auth = Db::authenticate($un, $pw);
         
         if(!$auth) {
-            self::login_GET('Incorrect email or password');
+            self::login_GET('Unable to log in');
         } else {
             $_SESSION['user_id'] = $auth[0]['user_id'];
             $_SESSION['user_name'] = $auth[0]['un'];

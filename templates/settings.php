@@ -15,16 +15,16 @@
 <div id="user_config">
 <table>
     <tr>
-        <td>
+        <td style="vertical-align: top;">
             Email: 
         </td>
         <td>
-            <span id="user_email_wrapper"><?=$user_email?>
+            <div id="user_email_wrapper"><?=$user_email?>
                 &nbsp;
                 <input type="button" id="user_email_update_button" 
                     name="user_email_update_button" value="Update" 
                     onclick="javascript:update_user_email('<?=$user_email?>');">
-            </span>
+            </div>
         </td>
     </tr>
     <tr>
@@ -85,6 +85,7 @@
 
 <input type="hidden" id="field_being_edited" name="field_being_edited" value="">
 <input type="hidden" id="new_value" name="new_value" value="">
+<input type="hidden" id="pwd_confirm" name="pwd_confirm" value="">
 
 </form>
 
@@ -112,6 +113,7 @@ function submit_change_form(field_being_edited = '') {
     var new_value = document.getElementById(field_being_edited).value;
     document.getElementById('field_being_edited').value = field_being_edited;
     document.getElementById('new_value').value = new_value;
+    document.getElementById('pwd_confirm').value = document.getElementById('password_confirm').value;
     document.getElementById('change_form').submit();
     // console.log("POSTing: " + field_being_edited + " - " + new_value);
 }
@@ -119,13 +121,17 @@ function submit_change_form(field_being_edited = '') {
 function update_user_email(current_value) {
     document.getElementById("user_email_wrapper").innerHTML = '' +
         '<input type="text" id="user_email" name="user_email" value="' + current_value + '" />' +
-        '&nbsp;' +
+        "<br />" +
+        "<input type='password' name='password_confirm' id='password_confirm' placeholder='Confirm current password'>" +
+        "<br />" +
         '<input type="button" id="user_email_submit_button" ' +
         '   name="user_email_submit_button" value="Submit change" ' +
         "   onclick='javascript:submit_change_form(\"user_email\");''>" +
         '&nbsp;or&nbsp;' +
         '<a href="javascript:void(0);" ' +
-        "   onclick=\"javascript:cancel_user_email('" + current_value + "');\">Cancel</a>";
+        "   onclick=\"javascript:cancel_user_email('" + current_value + "');\">Cancel</a>" +
+        "<br /><br />";
+
 
     document.getElementById("nickname_update_button").style.display = "none";
     // document.getElementById("sort_icon").style.display = "inline";
