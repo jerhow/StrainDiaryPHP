@@ -12,7 +12,10 @@ class Db {
         try {
             $dbh = new PDO($dsn, $db_user, $db_pwd);
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            error_log('Error in Db::dbh() - ' . $e->getMessage());
+            if($env === 'DEV') {
+                echo $e->getMessage();
+            }
             die;
         }
 
@@ -20,6 +23,42 @@ class Db {
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         return $dbh;
+    }
+
+    /**
+     * Returns true on success, otherwise false.
+     * Assumes inputs have been sanitized by the caller.
+     */
+    public static function updateUserName($user_id = '', $user_name = '')
+    {
+        global $dbh;
+
+        if($user_id === '' || $user_name === '') {
+            error_log('Error in Db::update_user_name() - one or more missing parameters');
+            // Q: Should we dump some session state to the log as well?
+            return false;
+        }
+
+        try {
+            $sql = "" .
+                "UPDATE t_user " .
+                "SET un = :user_name, " .
+                "confirmed = 'N' " .
+                "WHERE id = :user_id ";
+            
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':user_name', $user_name);
+            $stmt->bindValue(':user_id', $user_id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log('Error in Db::updateUserName() - ' . $e->getMessage());
+            if($env === 'DEV') {
+                echo $e->getMessage();
+            }
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -50,8 +89,10 @@ class Db {
             $stmt->execute();
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            error_log($e->getMessage());
-            echo $e->getMessage();
+            error_log('Error in Db::check_confirmation_code() - ' . $e->getMessage());
+            if($env === 'DEV') {
+                echo $e->getMessage();
+            }
         }
 
         if(count($rows) !== 1) {
@@ -89,8 +130,10 @@ class Db {
             $stmt->bindValue(':conf_code', $conf_code);
             $stmt->execute();
         } catch (PDOException $e) {
-            error_log($e->getMessage());
-            echo $e->getMessage();
+            error_log('Error in Db::mark_account_confirmed() - ' . $e->getMessage());
+            if($env === 'DEV') {
+                echo $e->getMessage();
+            }
         }
 
         return true;
@@ -119,8 +162,10 @@ class Db {
             $stmt->execute();
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            error_log($e->getMessage());
-            echo $e->getMessage();
+            error_log('Error in Db::authenticate() - ' . $e->getMessage());
+            if($env === 'DEV') {
+                echo $e->getMessage();
+            }
         }
 
         if(count($rows) !== 1) {
@@ -156,8 +201,10 @@ class Db {
             $stmt->execute();
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            error_log($e->getMessage());
-            echo $e->getMessage();
+            error_log('Error in Db::userNameExists() - ' . $e->getMessage());
+            if($env === 'DEV') {
+                echo $e->getMessage();
+            }
         }
 
         if(count($rows) === 1) {
@@ -192,8 +239,10 @@ class Db {
             $stmt->execute();
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            error_log($e->getMessage());
-            echo $e->getMessage();
+            error_log('Error in Db::nicknameExists() - ' . $e->getMessage());
+            if($env === 'DEV') {
+                echo $e->getMessage();
+            }
         }
 
         if(count($rows) === 1) {
@@ -220,8 +269,10 @@ class Db {
             $stmt->bindValue(':confirmation_code', $confirmation_code);
             $stmt->execute();
         } catch (PDOException $e) {
-            error_log($e->getMessage());
-            echo $e->getMessage();
+            error_log('Error in Db::addNewUser() - ' . $e->getMessage());
+            if($env === 'DEV') {
+                echo $e->getMessage();
+            }
         }
 
         return true;

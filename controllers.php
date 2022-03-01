@@ -5,13 +5,12 @@
 // use PDO;
 
 class Controllers {
-    public static function root_GET() {
+    public static function root_GET($red_msg = '', $green_msg = '') {
         Util::front_gate_check();
 
         // var_export(session_status(), false);
         // var_export(PHP_SESSION_NONE, false);
         // var_export($_SESSION, false);
-
 
         require_once('templates/header.php');
         require_once('templates/root.php');
@@ -33,7 +32,7 @@ class Controllers {
 
     }
 
-    public static function settings_GET($msg = '') {
+    public static function settings_GET($red_msg = '', $green_msg = '') {
         Util::session_check();
 
         $user_id = $_SESSION['user_id'];
@@ -56,7 +55,7 @@ class Controllers {
             ? trim($_POST['new_value']) 
             : '';
 
-        // Validate what's being passed in
+        // Validate what's being POSTed in
         $allowed_fields = ['user_email', 'nickname', 'pwd'];
         if(!in_array($field_being_edited, $allowed_fields)) {
             error_log("Invalid 'field_being_edited' value POSTed to Controllers::settings_POST()");
@@ -65,25 +64,62 @@ class Controllers {
         }
 
         if($field_being_edited === 'user_email') {
-            // Vaildate email
+            // Vaildate email (AKA 'user_name')
+            $new_value = substr($new_value, 0, 100);
+
+            if($_SESSION['user_name'] === $new_value) {
+                self::settings_GET(
+                    'New email address is the same as your existing one - no changes made'
+                );
+                return false;
+            }
+
+            if (!filter_var($new_value, FILTER_VALIDATE_EMAIL)) {
+                self::settings_GET("Invalid email address \"$new_value\" - no changes made");
+                return false;
+            }
+
+            if(Db::userNameExists($new_value)) {
+                self::settings_GET("Email address \"$new_value\" is already in use - no changes made");
+                return false;
+            }
+
+
             // Write update to DB
+            if(Db::updateUserName($_SESSION['user_id'], $new_value)) {
+                Util::logout();
+                self::root_GET(
+                    'Email address updated. Please check for an email from us, ' .
+                    'as you must confirm this change to activate the new email address.'
+                );
+            } else {
+                self::settings_GET(
+                    "An error occurred when trying to update email address - no changes made"
+                );
+                return false;
+            }
+
             // Dispatch transactional email to user about this change
-            self::settings_GET('{ INSERT APPROPRIATE MESSAGE }');
-            return false
+
+            self::settings_GET('',
+                'Email address updated. Please check for an email from us, ' .
+                'as you must confirm this change to activate the new email address.'
+            );
+            return false;
 
         } elseif($field_being_edited === 'nickname') {
             // Vaildate nickname
             // Write update to DB
             // Dispatch transactional email to user about this change
             self::settings_GET('{ INSERT APPROPRIATE MESSAGE }');
-            return false            
+            return false;           
 
         } elseif($field_being_edited === 'pwd') {
             // Vaildate password (field names: 'pwd' and 'pwd_verify')
             // Write update to DB
             // Dispatch transactional email to user about this change
             self::settings_GET('{ INSERT APPROPRIATE MESSAGE }');
-            return false
+            return false;
 
         } else {
              error_log('Hmm, we reached a place we should never be in Controllers::settings_POST()');

@@ -5,7 +5,8 @@
 
 <h1>Settings</h1>
 
-<p id="msg" style="color: red;"><?=$msg?></p>
+<div id="red_msg" style="color: red;"><?=$red_msg?></div>
+<div id="green_msg" style="color: green;"><?=$green_msg?></div>
 <p>Hello, <?=$nickname?>!</p>
 
 <p><a href='<?=URL_BASE?>/home'>Home</a></p>
@@ -87,7 +88,6 @@
 
 </form>
 
-<!--
 <p>Session data:</p>
 <pre>
     <?php
@@ -95,6 +95,7 @@
     ?>
 </pre>
 
+<!--
 <p>Request data:</p>
 <pre>
     <?php
