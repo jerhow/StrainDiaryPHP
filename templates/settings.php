@@ -28,16 +28,16 @@
         </td>
     </tr>
     <tr>
-        <td>
+        <td style="vertical-align: top;">
             Nickname: 
         </td>
         <td>
-            <span id="nickname_wrapper"><?=$nickname?>
+            <div id="nickname_wrapper"><?=$nickname?>
                 &nbsp;
                 <input type="button" id="nickname_update_button" 
                     name="nickname_update_button" value="Update" 
                     onclick="javascript:update_nickname('<?=$nickname?>');">
-            </span>
+            </div>
         </td>
     </tr>
 </table>
@@ -110,9 +110,9 @@
 <script type="text/javascript">
 
 function submit_change_form(field_being_edited = '') {
-    var new_value = document.getElementById(field_being_edited).value;
-    document.getElementById('field_being_edited').value = field_being_edited;
-    document.getElementById('new_value').value = new_value;
+    var new_value = document.getElementById(field_being_edited).value; // capture the new value for the field
+    document.getElementById('field_being_edited').value = field_being_edited; // set the field being edited for POST
+    document.getElementById('new_value').value = new_value; // set the new value for POST
     document.getElementById('pwd_confirm').value = document.getElementById('password_confirm').value;
     document.getElementById('change_form').submit();
     // console.log("POSTing: " + field_being_edited + " - " + new_value);
@@ -149,6 +149,24 @@ function cancel_user_email(current_value = '') {
 }
 
 function update_nickname(current_value = '') {
+    document.getElementById("nickname_wrapper").innerHTML = '' +
+        '<input type="text" id="nickname" name="nickname" value="' + current_value + '" />' +
+        "<br />" +
+        "<input type='password' name='password_confirm' id='password_confirm' placeholder='Confirm current password'>" +
+        "<br />" +
+        '<input type="button" id="nickname_submit_button" ' +
+        '   name="nickname_submit_button" value="Submit change" ' +
+        "   onclick='javascript:submit_change_form(\"nickname\");''>" +
+        '&nbsp;or&nbsp;' +
+        '<a href="javascript:void(0);" ' +
+        "   onclick=\"javascript:cancel_nickname('" + current_value + "');\">Cancel</a>" +
+        "<br /><br />";
+
+
+    document.getElementById("user_email_update_button").style.display = "none";
+}
+
+function update_nickname_(current_value = '') {
     document.getElementById("nickname_wrapper").innerHTML = '' +
         '<input type="text" id="nickname" name="nickname" value="' + current_value + '" />' +
         '&nbsp;' +

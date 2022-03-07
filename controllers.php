@@ -118,6 +118,27 @@ class Controllers {
 
         } elseif($field_being_edited === 'nickname') {
             // Vaildate nickname
+            $nickname = substr($new_value, 0, 50);
+            if(preg_match('/[^a-zA-Z0-9\_\-]/mi', $nickname)) {
+                self::settings_GET(
+                    "Nickname '$nickname' cannot be used, as a nicknames may only contain " .
+                    "letters, numbers, dashes and underscores - no changes made", 
+                );
+                return false;
+            }
+
+            if($_SESSION['nickname'] === $new_value) {
+                self::settings_GET(
+                    'New nickname is the same as your existing one - no changes made'
+                );
+                return false;
+            }
+
+            if(Db::nicknameExists($nickname)) {
+                self::settings_GET("The nickname '$nickname' is already in use - no changes made");
+                return false;
+            }
+
             // Write update to DB
             // Dispatch transactional email to user about this change
             self::settings_GET('{ INSERT APPROPRIATE MESSAGE }');
