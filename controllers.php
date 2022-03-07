@@ -140,8 +140,20 @@ class Controllers {
             }
 
             // Write update to DB
+            if(!Db::updateNickname($_SESSION['user_id'], $new_value)) {
+                self::settings_GET(
+                    "An error occurred when trying to update nickname - no changes made"
+                );
+                return false;
+            } else {
+                $_SESSION['nickname'] = $new_value;
+            }
+
             // Dispatch transactional email to user about this change
-            self::settings_GET('{ INSERT APPROPRIATE MESSAGE }');
+            
+            self::settings_GET('',
+                "Nickname updated to '$new_value' successfully"
+            );
             return false;           
 
         } elseif($field_being_edited === 'pwd') {

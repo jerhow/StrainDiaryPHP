@@ -62,6 +62,41 @@ class Db {
     }
 
     /**
+     * Returns true on success, otherwise false.
+     * Assumes inputs have been sanitized by the caller.
+     */
+    public static function updateNickname($user_id = '', $nickname = '')
+    {
+        global $dbh;
+
+        if($user_id === '' || $nickname === '') {
+            error_log('Error in Db::updateNickname() - one or more missing parameters');
+            // Q: Should we dump some session state to the log as well?
+            return false;
+        }
+
+        try {
+            $sql = "" .
+                "UPDATE t_user " .
+                "SET nickname = :nickname " .
+                "WHERE id = :user_id ";
+            
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':nickname', $nickname);
+            $stmt->bindValue(':user_id', $user_id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log('Error in Db::updateNickame() - ' . $e->getMessage());
+            if($env === 'DEV') {
+                echo $e->getMessage();
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Returns a boolean:
      * true, if code is found and matches an UNCONFIRMED record
      * false, if code is found but matches a CONFIRMED record
