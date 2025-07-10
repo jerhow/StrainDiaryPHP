@@ -1,5 +1,5 @@
 # Strain Diary (PHP)
-Lightweight tool for tracking, reviewing and organizing one's experiences with various strains of plant matter.
+Lightweight tool for tracking and organizing one's experiences with various strains, formulations and dosing of medicinal cannabis.
 <br/><br/>
 I originally [prototyped](https://github.com/jerhow/straindiary) this a few years ago as a REST API written in Go, with MySQL behind it and a monstrous, decoupled Vanilla JS front end on top. I got it about 90% complete before I put it aside.
 <br/><br/>
